@@ -21,9 +21,6 @@ jobs:
         k3s_tag: v1.18.6-k3s1
         kubectl_version: v1.18.6
     - name: Setup fluxctl
-      with:
-        version: v0.8.1
-    - name: Setup fluxctl
       uses: fluxcd/fluxctl-action@v1.19.0
     - name: Install Flux
       run: |
