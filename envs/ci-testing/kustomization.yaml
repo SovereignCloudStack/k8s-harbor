@@ -1,5 +1,6 @@
 bases:
 - ../../base
+- github.com/fluxcd/helm-operator/deploy?ref=1.2.0
 
 resources:
 - harbor-config.yaml
