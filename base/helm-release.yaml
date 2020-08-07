@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: harbor
+spec:
+  chart:
+    git: https://github.com/goharbor/harbor-helm.git
+    path: .
+  wait: true
+  valuesFrom:
+  - configMapKeyRef:
+      name: harbor-base-config
+      key: config.yaml
+  - configMapKeyRef:
+      name: harbor-config
+      key: config.yaml

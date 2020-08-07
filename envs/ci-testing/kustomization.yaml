@@ -1,0 +1,20 @@
+bases:
+- ../../base
+
+resources:
+- harbor-config.yaml
+
+# enable helm v3 on flux-helm-operator
+# see https://docs.fluxcd.io/projects/helm-operator/en/stable/get-started/using-kustomize/
+patchesJSON6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
+    namespace: flux
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/args
+      value:
+        - --enabled-helm-versions=v3

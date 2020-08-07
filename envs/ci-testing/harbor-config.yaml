@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    chartmuseum:
+      enabled: false
+    clair:
+      enabled: false
+    trivy:
+      enabled: false
+    notary:
+      enabled: false
+
+kind: ConfigMap
+metadata:
+  name: harbor-config
