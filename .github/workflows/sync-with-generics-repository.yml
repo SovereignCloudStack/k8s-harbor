@@ -2,6 +2,9 @@
 name: Sync with generics repository
 
 on:
+  push:
+    paths:
+      - .github/workflows/sync-with-generics-repository.yml
   schedule: 
     - cron: "0 0 * * *"
   repository_dispatch:
@@ -21,7 +24,10 @@ jobs:
             gilt overlay
             gilt overlay
           COMMIT_EMAIL: 'github+actions@scs.community'
-          COMMIT_MESSAGE: 'chore: sync with generics repository'
+          COMMIT_MESSAGE: |
+            chore: sync with generics repository
+
+            Signed-off-by: GitHub Actions <github+actions@scs.community>
           COMMIT_NAME: 'GitHub Actions'
           ONLY_DEFAULT_BRANCH: true
           PR_BRANCH_NAME: 'sync-with-generics-repository'

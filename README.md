@@ -17,6 +17,9 @@ In order to ensure that every component inside of SCS behaves as
 expected, there should be simple smoke tests.
 These tests are implemented using GitHub Actions/Workflows.
 
+
 ## Further information
 
 Harbor website: https://goharbor.io/
+
+

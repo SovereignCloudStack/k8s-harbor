@@ -6,21 +6,27 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-  KUBECONFIG: k3s.yaml
-
 jobs:
   integration-test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v2
-    - name: Spawn Kubernetes Cluster
-      uses: yellowmegaman/k3s-gha@master
+    - name: Run conftest
+      uses: stefanprodan/kube-tools@v1
       with:
-        k3s_tag: v1.18.6-k3s1
-        kubectl_version: v1.18.6
-    - name: Setup fluxctl
+        kubectl: 1.18.2
+        kustomize: 3.5.5
+        command: |
+          set -x
+          set +e
+          kustomize build envs/ci-testing | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
+          set -e
+          cat result.json | jq '.[0].failures[].msg' | xargs printf "::warning::%s\n"
+    - uses: engineerd/setup-kind@v0.4.0
+      with:
+        version: v0.8.1
+    - name: Setup fluxctl # Following steps are based on fluxctl-action docs
       uses: fluxcd/fluxctl-action@v1.19.0
     - name: Install Flux
       run: |
@@ -34,9 +40,9 @@ jobs:
         --git-url=https://github.com/$GITHUB_REPOSITORY.git \
         --manifest-generation=true \
         --namespace=flux | kubectl apply -f -
-    - name: Verify Flux Installation
+    - name: Verify install
       run: kubectl -n flux rollout status deploy/flux --timeout=1m
-    - name: Force fluxctl sync with git
+    - name: Sync git with cluster
       env:
         FLUX_FORWARD_NAMESPACE: flux
       run: fluxctl sync
@@ -44,7 +50,7 @@ jobs:
       run: ./test/wait
     - name: Check if service is working as expected
       run: ./test/test
-    - name: Get fluxcd logs
+    - name: Fetch fluxcd logs
       if: ${{ always() }}
       run: kubectl logs -n flux deploy/flux
     - name: Fetch helm-operator logs if present
