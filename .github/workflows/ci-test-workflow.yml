@@ -23,37 +23,28 @@ jobs:
           kustomize build envs/ci-testing | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
           set -e
           cat result.json | jq '.[0].failures[].msg' | xargs printf "::warning::%s\n"
-    - uses: engineerd/setup-kind@v0.4.0
+    - uses: engineerd/setup-kind@v0.5.0
       with:
         version: v0.8.1
-    - name: Setup fluxctl # Following steps are based on fluxctl-action docs
-      uses: fluxcd/fluxctl-action@v1.19.0
-    - name: Install Flux
+    - name: Install flux cli and do setup
       run: |
-        kubectl create ns flux
-        fluxctl install \
-        --git-path=envs/ci-testing \
-        --git-branch=${GITHUB_REF#refs/heads/} \
-        --git-readonly=true \
-        --registry-disable-scanning=true \
-        --git-email=invalid@scs.community \
-        --git-url=https://github.com/$GITHUB_REPOSITORY.git \
-        --manifest-generation=true \
-        --namespace=flux | kubectl apply -f -
-    - name: Verify install
-      run: kubectl -n flux rollout status deploy/flux --timeout=1m
-    - name: Sync git with cluster
-      env:
-        FLUX_FORWARD_NAMESPACE: flux
-      run: fluxctl sync
+        set -e
+        curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
+        set -x
+        flux install --components=source-controller,kustomize-controller,helm-controller
+    - name: Setup GitRepository/Kustomization
+      run: |
+        set -ex
+        flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF#refs/heads/}
+        flux create kustomization deployment --source=repo --path=envs/ci-testing --prune
     - name: Wait for service to be Ready
       run: ./test/wait
     - name: Check if service is working as expected
       run: ./test/test
     - name: Fetch fluxcd logs
       if: ${{ always() }}
-      run: kubectl logs -n flux deploy/flux
-    - name: Fetch helm-operator logs if present
-      if: ${{ always() }}
       run: |
-        kubectl get deploy -n flux helm-operator && kubectl logs -n flux deploy/helm-operator || echo 'helm-operator not present'
+        set -x
+        kubectl logs -n flux-system deploy/source-controller
+        kubectl logs -n flux-system deploy/kustomize-controller
+        kubectl logs -n flux-system deploy/helm-controller

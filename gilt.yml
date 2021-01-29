@@ -12,8 +12,6 @@
       dst: ./gilt.yml
     - src: k8s/README.md
       dst: ./README.md
-    - src: k8s/.flux.yaml
-      dst: ./
     - src: k8s/render-template.py
       dst: ./render-template.py
     - src: k8s/create-test-stubs.sh
@@ -24,5 +22,4 @@
         - ./create-test-stubs.sh
         - python3 render-template.py README.md
         - mkdir -p envs/ci-testing
-        - touch envs/ci-testing/flux-patch.yaml
         - rm render-template.py create-test-stubs.sh
