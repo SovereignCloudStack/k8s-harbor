@@ -27,3 +27,6 @@ spec:
   - kind: ConfigMap
     name: harbor-config
     valuesKey: config.yaml
+  - kind: Secret
+    name: harbor-secrets
+    valuesKey: values.yaml

@@ -1,3 +1,5 @@
 resources:
 - helm-release.yaml
 - harbor-base-config.yaml
+- cert-manager.yaml
+- nginx-ingress.yaml
