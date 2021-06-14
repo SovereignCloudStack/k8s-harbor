@@ -20,6 +20,12 @@ spec:
       sourceRef:
         kind: GitRepository
         name: harbor-helm
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: -1
   valuesFrom:
   - kind: ConfigMap
     name: harbor-base-config
