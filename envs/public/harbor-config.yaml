@@ -1,6 +1,18 @@
 apiVersion: v1
 data:
   config.yaml: |
+    persistence:
+      persistentVolumeClaim:
+        registry:
+          size: 1Ti
+        jobservice:
+          size: 64Gi
+        database:
+          size: 256Gi
+        redis:
+          size: 128Gi
+        trivy:
+          size: 256Gi
     expose:
       type: ingress
       tls:
