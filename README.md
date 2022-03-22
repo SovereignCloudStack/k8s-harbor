@@ -5,6 +5,8 @@
 This repository is intended to include all relevant configuration
 and Kubernetes manifests for the deployment of Harbor inside SCS.
 
+You need to have the flux service and CRDs installed.
+
 ## Repository layout
 
 This repository contains kustomize bases which may be referenced by
