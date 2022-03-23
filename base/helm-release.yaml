@@ -1,7 +1,9 @@
+---
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
   name: harbor-helm
+  namespace: default
 spec:
   interval: 1m
   url: https://github.com/goharbor/harbor-helm.git
@@ -12,6 +14,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: harbor
+  namespace: default
 spec:
   interval: 1m
   chart:
