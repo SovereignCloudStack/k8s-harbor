@@ -17,6 +17,7 @@ jobs:
       with:
         kubectl: 1.21.1
         kustomize: 3.9.4
+        helmv3: 3.6.3
         command: |
           set -x
           set +e
