@@ -23,7 +23,7 @@ jobs:
           set -x
           set +e
           kustomize build envs/ci-testing | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
-          set -e
+          #set -e
           cat result.json | jq '.[0].failures[].msg' | xargs printf "::warning::%s\n"
     - uses: engineerd/setup-kind@v0.5.0
       with:
