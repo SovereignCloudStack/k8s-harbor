@@ -30,13 +30,13 @@ jobs:
         version: v0.12.0
     - name: Install flux cli and do setup
       run: |
-        set -e
+        #set -e
         curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
-        set -x
+        #set -x
         flux install --components=source-controller,kustomize-controller,helm-controller
     - name: Setup GitRepository/Kustomization
       run: |
-        set -ex
+        #set -ex
         flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF#refs/heads/}
         flux create kustomization deployment --source=repo --path=envs/ci-testing --prune
     - name: Wait for service to be Ready
@@ -46,7 +46,7 @@ jobs:
     - name: Fetch fluxcd logs
       if: ${{ always() }}
       run: |
-        set -x
+        #set -x
         kubectl logs -n flux-system deploy/source-controller
         kubectl logs -n flux-system deploy/kustomize-controller
         kubectl logs -n flux-system deploy/helm-controller
