@@ -15,8 +15,8 @@ jobs:
     - name: Run conftest
       uses: stefanprodan/kube-tools@v1
       with:
-        kubectl: 1.18.2
-        kustomize: 3.5.5
+        kubectl: 1.21.1
+        kustomize: 3.9.4
         command: |
           set -x
           set +e
