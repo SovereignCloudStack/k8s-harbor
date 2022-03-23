@@ -8,3 +8,4 @@ data:
 kind: ConfigMap
 metadata:
   name: harbor-config
+  namespace: default

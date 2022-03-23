@@ -15,27 +15,29 @@ jobs:
     - name: Run conftest
       uses: stefanprodan/kube-tools@v1
       with:
-        kubectl: 1.18.2
-        kustomize: 3.5.5
+        kubectl: 1.21.1
+        kustomize: 3.9.4
+        helmv3: 3.6.3
         command: |
           set -x
           set +e
           kustomize build envs/ci-testing | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
           set -e
-          cat result.json | jq '.[0].failures[].msg' | xargs printf "::warning::%s\n"
+          cat result.json #| jq '.[0].failures[].msg' | xargs printf "::warning::%s\n"
     - uses: engineerd/setup-kind@v0.5.0
       with:
-        version: v0.8.1
+        version: v0.11.1
     - name: Install flux cli and do setup
       run: |
         set -e
-        curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
+        curl -Ls https://toolkit.fluxcd.io/install.sh | sudo bash
         set -x
         flux install --components=source-controller,kustomize-controller,helm-controller
     - name: Setup GitRepository/Kustomization
       run: |
         set -ex
-        flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF#refs/heads/}
+        flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}
+        #flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=$GITHUB_REF_NAME
         flux create kustomization deployment --source=repo --path=envs/ci-testing --prune
     - name: Wait for service to be Ready
       run: ./test/wait
