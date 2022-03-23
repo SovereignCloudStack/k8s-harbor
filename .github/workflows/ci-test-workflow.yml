@@ -30,7 +30,7 @@ jobs:
         version: v0.12.0
     - name: Install flux cli and do setup
       run: |
-        curl -so https://toolkit.fluxcd.io/install.sh
+        curl -sO https://toolkit.fluxcd.io/install.sh
         chmod +x install.sh
         sudo ./install.sh
         flux install --components=source-controller,kustomize-controller,helm-controller
