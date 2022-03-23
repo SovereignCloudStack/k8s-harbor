@@ -36,7 +36,7 @@ jobs:
     - name: Setup GitRepository/Kustomization
       run: |
         set -ex
-        if test -n "${GITHUB_HEAD_REF#refs/heads/}"; then flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}; else flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git; fi
+        if test -n "${GITHUB_HEAD_REF#refs/heads/}"; then flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}; else flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF#refs/heads/}; fi
         #flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=$GITHUB_REF_NAME
         flux create kustomization deployment --source=repo --path=envs/ci-testing --prune
     - name: Wait for service to be Ready
