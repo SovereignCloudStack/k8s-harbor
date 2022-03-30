@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE=$(mktemp)
+FILE=$(mktemp ./values.yaml.XXXXXX)
 
 cat > $FILE <<EOF
 harborAdminPassword: $(pwgen -s 20 1)
