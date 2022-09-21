@@ -3,3 +3,4 @@ bases:
 
 resources:
 - harbor-config.yaml
+- harbor-secrets.yaml
