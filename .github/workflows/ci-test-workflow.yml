@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   integration-test:
@@ -15,18 +15,18 @@ jobs:
     - name: Run conftest
       uses: stefanprodan/kube-tools@v1
       with:
-        kubectl: 1.21.1
-        kustomize: 3.9.4
-        helmv3: 3.6.3
+        kubectl: 1.23.4
+        kustomize: 4.5.2
+        helmv3: 3.8.1
         command: |
           set -x
           set +e
           kustomize build envs/ci-testing | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
           set -e
-          cat result.json #| jq '.[0].failures[].msg' | xargs printf "::warning::%s\n"
+          cat result.json | jq -r '(.[0].failures // []) | "::warning::\(.[].msg)\n"'
     - uses: engineerd/setup-kind@v0.5.0
       with:
-        version: v0.11.1
+        version: v0.12.0
     - name: Install flux cli and do setup
       run: |
         set -e
@@ -36,8 +36,7 @@ jobs:
     - name: Setup GitRepository/Kustomization
       run: |
         set -ex
-        if test -n "${GITHUB_HEAD_REF#refs/heads/}"; then flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}; else flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF#refs/heads/}; fi
-        #flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=$GITHUB_REF_NAME
+        if test -n "${GITHUB_HEAD_REF#refs/heads/}"; then flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}; else flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF_NAME}; fi
         flux create kustomization deployment --source=repo --path=envs/ci-testing --prune
     - name: Wait for service to be Ready
       run: ./test/wait

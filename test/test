@@ -1,1 +1,25 @@
 #!/bin/bash
+
+export HARBOR=harbor.default.svc
+
+cat - > script.sh <<EOF
+set -ex
+apt-get update
+apt-get install -y skopeo jq ca-certificates
+
+cat - >> /etc/containers/registries.conf <<EO2
+[[registry]]
+location = "$HARBOR"
+insecure = true
+
+EO2
+
+echo -n 'Harbor12345' | skopeo login --username admin --password-stdin $HARBOR
+
+skopeo copy docker://docker.io/busybox:latest docker://$HARBOR/library/busybox:latest
+
+skopeo list-tags docker://$HARBOR/library/busybox | jq '.Tags'
+
+EOF
+
+kubectl run -i --rm --restart=Never --image=debian --command health-check -- bash -c "$(cat script.sh)"

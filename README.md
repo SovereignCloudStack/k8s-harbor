@@ -5,13 +5,13 @@
 This repository is intended to include all relevant configuration
 and Kubernetes manifests for the deployment of Harbor inside SCS.
 
-You need to have the flux service and CRDs installed.
-
 ## Repository layout
 
 This repository contains kustomize bases which may be referenced by
 kustomize overlays which in turn define the deployment of whole
 environments/clusters.
+
+Also, usually flux2 resources are used for e.g. Helm, so flux2 controllers need to be installed in any destination cluster.
 
 ## Automated smoke tests
 

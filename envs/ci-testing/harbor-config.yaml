@@ -5,6 +5,7 @@ data:
       type: clusterIP
       tls:
         enabled: false
+    externalURL: http://harbor.default.svc
 kind: ConfigMap
 metadata:
   name: harbor-config

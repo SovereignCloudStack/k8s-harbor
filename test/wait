@@ -2,6 +2,4 @@
 
 set -ex
 
-sleep 5 
-
-kubectl describe nodes
+flux reconcile helmrelease -n default harbor
