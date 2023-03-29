@@ -1,0 +1,21 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: postgresql
+spec:
+  teamId: "harbor"
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    # {namespace}.{username} when enable_cross_namespace_secret is true
+    harbor:
+    - createdb
+  databases:
+    registry: harbor
+    notaryserver: harbor
+    notarysigner: harbor
+  postgresql:
+    version: "15"
+    parameters:
+      password_encryption: scram-sha-256
