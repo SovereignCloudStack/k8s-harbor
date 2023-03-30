@@ -1,14 +1,12 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: GitRepository
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
 metadata:
   name: harbor-helm
   namespace: default
 spec:
-  interval: 1m
-  url: https://github.com/goharbor/harbor-helm.git
-  ref:
-    tag: v1.10.0
+  interval: 1m0s
+  url: https://helm.goharbor.io
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -16,13 +14,17 @@ metadata:
   name: harbor
   namespace: default
 spec:
-  interval: 1m
+  targetNamespace: default
   chart:
     spec:
-      chart: .
+      chart: harbor
+      version: 1.11.1
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: harbor-helm
+        namespace: default
+  interval: 1m0s
+  releaseName: harbor
   install:
     remediation:
       retries: -1
@@ -39,3 +41,20 @@ spec:
   - kind: Secret
     name: harbor-secrets
     valuesKey: values.yaml
+  - kind: Secret
+    name: swift-secret
+    valuesKey: password
+    targetPath: persistence.imageChartStorage.swift.password
+    optional: true
+  # workaround for https://github.com/goharbor/harbor-helm/issues/1352
+  - kind: Secret
+    name: harbor-redis-auth
+    valuesKey: password
+    targetPath: redis.external.password
+    optional: true
+  # workaround for https://github.com/goharbor/harbor-helm/issues/1358
+  - kind: Secret
+    name: harbor-postgresql-auth
+    valuesKey: password
+    targetPath: database.external.password
+    optional: true

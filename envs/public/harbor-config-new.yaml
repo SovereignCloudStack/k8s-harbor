@@ -1,0 +1,66 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    chartmuseum:
+      enabled: true
+      replicas: 2
+    trivy:
+      replicas: 2
+    notary:
+      enabled: true
+      server:
+        replicas: 2
+      signer:
+        replicas: 2
+    portal:
+      replicas: 2
+    core:
+      replicas: 2
+    jobservice:
+      replicas: 2
+      jobLoggers:
+      - database
+    registry:
+      replicas: 2
+    cache:
+      enabled: true
+    metrics:
+      enabled: true
+    internalTLS:
+      enabled: true
+    expose:
+      type: nodePort
+      tls:
+        auto:
+          commonName: "harbor"
+    database:
+      type: external
+      external:
+        host: "postgresql"
+        username: "harbor"
+        coreDatabase: "registry"
+        notaryServerDatabase: "notaryserver"
+        notarySignerDatabase: "notarysigner"
+        existingSecret: "harbor-postgresql-auth"
+        sslmode: "require"
+    redis:
+      type: external
+      external:
+        addr: "rfs-redisfailover:26379"
+        sentinelMasterSet: "mymaster"
+        existingSecret: "harbor-redis-auth"
+    persistence:
+      imageChartStorage:
+        type: swift
+        swift:
+          authurl: https://api.gx-scs.sovereignit.cloud:5000/v3
+          username: "u500924-chess-knight"
+          container: registry
+          region: RegionOne
+          tenant: p500924-dnation
+          tenantid: 602778bad3d3470cbe58c4f7611e8eb7
+          domain: d500924
+kind: ConfigMap
+metadata:
+  name: harbor-config
+  namespace: default

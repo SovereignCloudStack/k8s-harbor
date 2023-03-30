@@ -1,0 +1,111 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: k8s-harbor
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/SovereignCloudStack/k8s-harbor
+  ref:
+    branch: postgres-test
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: postgres-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  targetNamespace: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./postgres/operator"
+  prune: true
+  healthChecks:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    name: postgres-operator
+    namespace: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: postgres-cluster
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: postgres-operator
+  interval: 10m
+  targetNamespace: default
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./postgres/cluster"
+  prune: true
+  healthChecks:
+  - apiVersion: apps/v1
+    kind: StatefulSet
+    name: postgresql
+    namespace: default
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: redis-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  targetNamespace: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./redis/operator"
+  prune: true
+  healthChecks:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    name: redis-operator
+    namespace: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: redis-cluster
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: redis-operator
+  interval: 10m
+  targetNamespace: default
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./redis/cluster"
+  prune: true
+  healthChecks:
+  - apiVersion: apps/v1
+    kind: StatefulSet
+    name: rfr-redisfailover
+    namespace: default
+  - apiVersion: apps/v1
+    kind: Deployment
+    name: rfs-redisfailover
+    namespace: default
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: harbor
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: postgres-cluster
+  - name: redis-cluster
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./envs/public"
+  prune: true

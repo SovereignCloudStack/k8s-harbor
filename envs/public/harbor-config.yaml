@@ -17,8 +17,6 @@ data:
       type: ingress
       tls:
         enabled: true
-        secret:
-          secretName: le-harbor
       ingress:
         hosts:
           core: registry.scs.community

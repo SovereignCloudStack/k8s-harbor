@@ -1,8 +1,6 @@
 # url: rfs-<NAME>
 # port: 26379
 # master-name: mymaster
-# TODO: This minimal Redis cluster deployment uses ephemeral emptyDir for
-#       persistence - It is required (by Harbor) to have Redis with persistence storage?
 apiVersion: databases.spotahome.com/v1
 kind: RedisFailover
 metadata:
@@ -10,19 +8,18 @@ metadata:
 spec:
   sentinel:
     replicas: 3
-    resources:
-      requests:
-        cpu: 100m
-      limits:
-        memory: 100Mi
   redis:
     replicas: 3
-    resources:
-      requests:
-        cpu: 100m
-        memory: 100Mi
-      limits:
-        cpu: 400m
-        memory: 500Mi
+    # TODO: It is required (by Harbor) to have Redis with persistence storage?
+    storage:
+      persistentVolumeClaim:
+        metadata:
+          name: redisfailover-data
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
   auth:
     secretPath: harbor-redis-auth

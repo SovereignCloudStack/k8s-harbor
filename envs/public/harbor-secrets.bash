@@ -8,7 +8,9 @@ secretKey: $(pwgen -s 16 1)
 core:
   secret: $(pwgen -s 16 1)
   xsrfKey: $(pwgen -s 20 1)
-jobService:
+jobservice:
+  secret: $(pwgen -s 16 1)
+registry:
   secret: $(pwgen -s 16 1)
 EOF
 

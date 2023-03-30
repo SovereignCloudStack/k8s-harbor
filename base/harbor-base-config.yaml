@@ -4,8 +4,6 @@ data:
   config.yaml: |
     chartmuseum:
       enabled: false
-    clair:
-      enabled: false
     trivy:
       enabled: true
     notary:
