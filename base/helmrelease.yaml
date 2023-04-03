@@ -1,13 +1,3 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: harbor-helm
-  namespace: default
-spec:
-  interval: 1m0s
-  url: https://helm.goharbor.io
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:

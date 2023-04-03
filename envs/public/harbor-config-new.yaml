@@ -28,11 +28,31 @@ data:
       enabled: true
     internalTLS:
       enabled: true
+    #expose:
+      #type: nodePort
+      #tls:
+        #auto:
+          #commonName: "harbor"
     expose:
-      type: nodePort
+      type: ingress
       tls:
-        auto:
-          commonName: "harbor"
+        enabled: true
+        certSource: secret
+        secret:
+          secretName: harbor-crt
+          notarySecretName: notary-crt
+      ingress:
+        hosts:
+          core: harbor.test.dnation.cloud
+          notary: harbor-notary.test.dnation.cloud
+        className: nginx
+        harbor:
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-staging
+        notary:
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-staging
+    externalURL: https://harbor.test.dnation.cloud
     database:
       type: external
       external:

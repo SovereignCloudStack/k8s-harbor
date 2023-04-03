@@ -7,3 +7,4 @@ resources:
 #- harbor-config.yaml
 #- issuer.yaml
 - harbor-config-new.yaml
+- cluster-issuer.yaml
