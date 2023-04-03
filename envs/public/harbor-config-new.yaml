@@ -48,10 +48,10 @@ data:
         className: nginx
         harbor:
           annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-staging
+            cert-manager.io/cluster-issuer: letsencrypt
         notary:
           annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-staging
+            cert-manager.io/cluster-issuer: letsencrypt
     externalURL: https://harbor.test.dnation.cloud
     database:
       type: external

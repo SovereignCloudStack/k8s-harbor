@@ -7,7 +7,7 @@ harborAdminPassword: $(pwgen -s 20 1)
 secretKey: $(pwgen -s 16 1)
 core:
   secret: $(pwgen -s 16 1)
-  xsrfKey: $(pwgen -s 20 1)
+  xsrfKey: $(pwgen -s 32 1)
 jobservice:
   secret: $(pwgen -s 16 1)
 registry:
