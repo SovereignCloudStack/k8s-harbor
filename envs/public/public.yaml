@@ -21,7 +21,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./postgres/operator"
+  path: "./operators/postgres"
   prune: true
   healthChecks:
   - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -42,7 +42,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./postgres/cluster"
+  path: "./postgres"
   prune: true
   healthChecks:
   - apiVersion: apps/v1
@@ -61,7 +61,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./redis/operator"
+  path: "./operators/redis"
   prune: true
   healthChecks:
   - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -82,7 +82,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./redis/cluster"
+  path: "./redis"
   prune: true
   healthChecks:
   - apiVersion: apps/v1
@@ -105,7 +105,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./ingress-nginx"
+  path: "./operators/ingress-nginx"
   prune: true
   healthChecks:
   - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -124,7 +124,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./cert-manager"
+  path: "./operators/cert-manager"
   prune: true
   healthChecks:
   - apiVersion: helm.toolkit.fluxcd.io/v2beta1
