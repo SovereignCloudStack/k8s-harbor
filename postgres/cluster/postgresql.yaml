@@ -5,7 +5,7 @@ metadata:
 spec:
   teamId: "harbor"
   volume:
-    size: 1Gi
+    size: 10Gi
   numberOfInstances: 2
   users:
     # {namespace}.{username} when enable_cross_namespace_secret is true

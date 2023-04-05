@@ -33,6 +33,11 @@ spec:
     valuesKey: values.yaml
   - kind: Secret
     name: swift-secret
+    valuesKey: username
+    targetPath: persistence.imageChartStorage.swift.username
+    optional: true
+  - kind: Secret
+    name: swift-secret
     valuesKey: password
     targetPath: persistence.imageChartStorage.swift.password
     optional: true

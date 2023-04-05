@@ -15,11 +15,3 @@ spec:
         name: ingress-nginx
   interval: 1m0s
   releaseName: ingress-nginx
-  values:
-    controller:
-      kind: DaemonSet
-      service:
-        type: NodePort
-        nodePorts:
-          http: 32080
-          https: 32443

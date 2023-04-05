@@ -1,5 +1,5 @@
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: letsencrypt
 spec:
@@ -7,7 +7,7 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: roman.hros@dnation.cloud
     privateKeySecretRef:
-      name: letsencrypt
+      name: le-harbor
     solvers:
     - http01:
         ingress:
