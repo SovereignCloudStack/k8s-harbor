@@ -69,7 +69,7 @@ data:
     persistence:
       persistentVolumeClaim:
         trivy:
-          size: 10Gi
+          size: 128Gi
       imageChartStorage:
         type: swift
         swift:
@@ -78,7 +78,7 @@ data:
           # username and password are populated via swift-secret.bash
           container: registry
           region: RegionOne
-          tenantid: 602778bad3d3470cbe58c4f7611e8eb7
+          tenantid: abbe6561cf6248b6af395334aa09af85
           domain: d500924
 kind: ConfigMap
 metadata:
