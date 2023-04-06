@@ -38,8 +38,8 @@ data:
           notarySecretName: notary-crt
       ingress:
         hosts:
-          core: harbor.test.dnation.cloud
-          notary: harbor-notary.test.dnation.cloud
+          core: registry.scs.dnation.cloud
+          notary: notary.scs.dnation.cloud
         className: nginx
         harbor:
           annotations:
@@ -47,7 +47,7 @@ data:
         notary:
           annotations:
             cert-manager.io/issuer: letsencrypt
-    externalURL: https://harbor.test.dnation.cloud
+    externalURL: https://registry.scs.dnation.cloud
     database:
       type: external
       external:
