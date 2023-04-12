@@ -1,12 +1,3 @@
-#---
-#apiVersion: source.toolkit.fluxcd.io/v1beta2
-#kind: GitRepository
-#metadata:
-#  name: k8s-harbor
-#  namespace: flux-system
-#spec:
-#  interval: 5m
-#  url: https://github.com/SovereignCloudStack/k8s-harbor
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -40,7 +31,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./postgres"
+  path: "./envs/public/postgres"
   prune: true
   healthChecks:
   - apiVersion: apps/v1
@@ -80,7 +71,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k8s-harbor
-  path: "./redis"
+  path: "./envs/public/redis"
   prune: true
   healthChecks:
   - apiVersion: apps/v1
@@ -91,44 +82,44 @@ spec:
     kind: Deployment
     name: rfs-redisfailover
     namespace: default
-#---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-#kind: Kustomization
-#metadata:
-#  name: ingress-nginx
-#  namespace: flux-system
-#spec:
-#  interval: 10m
-#  targetNamespace: flux-system
-#  sourceRef:
-#    kind: GitRepository
-#    name: k8s-harbor
-#  path: "./operators/ingress-nginx"
-#  prune: true
-#  healthChecks:
-#  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-#    kind: HelmRelease
-#    name: ingress-nginx
-#    namespace: flux-system
-#---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-#kind: Kustomization
-#metadata:
-#  name: cert-manager
-#  namespace: flux-system
-#spec:
-#  interval: 10m
-#  targetNamespace: flux-system
-#  sourceRef:
-#    kind: GitRepository
-#    name: k8s-harbor
-#  path: "./operators/cert-manager"
-#  prune: true
-#  healthChecks:
-#  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-#    kind: HelmRelease
-#    name: cert-manager
-#    namespace: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: ingress-nginx
+  namespace: flux-system
+spec:
+  interval: 10m
+  targetNamespace: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./operators/ingress-nginx"
+  prune: true
+  healthChecks:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    name: ingress-nginx
+    namespace: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cert-manager
+  namespace: flux-system
+spec:
+  interval: 10m
+  targetNamespace: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: k8s-harbor
+  path: "./operators/cert-manager"
+  prune: true
+  healthChecks:
+  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    kind: HelmRelease
+    name: cert-manager
+    namespace: flux-system
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -139,8 +130,8 @@ spec:
   dependsOn:
   - name: postgres-cluster
   - name: redis-cluster
-#  - name: ingress-nginx
-#  - name: cert-manager
+  - name: ingress-nginx
+  - name: cert-manager
   interval: 10m
   sourceRef:
     kind: GitRepository

@@ -5,10 +5,9 @@ metadata:
 spec:
   teamId: "harbor"
   volume:
-    size: 128Gi
+    size: 1Gi
   numberOfInstances: 2
   users:
-    # {namespace}.{username} when enable_cross_namespace_secret is true
     harbor:
     - createdb
   databases:
