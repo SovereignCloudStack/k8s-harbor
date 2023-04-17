@@ -25,10 +25,6 @@ data:
       replicas: 2
     cache:
       enabled: true
-    metrics:
-      enabled: true
-    internalTLS:
-      enabled: true
     expose:
       type: ingress
       tls:

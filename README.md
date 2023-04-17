@@ -53,7 +53,7 @@ curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=0.40.2 bash
 flux install
 ```
 
-### Example installation - public environment
+### Example public environment installation
 
 #### Install and wait for operators
 ```
@@ -100,6 +100,15 @@ bash envs/public/swift-secret.bash <username> <password>
 flux create source git k8s-harbor --url=https://github.com/SovereignCloudStack/k8s-harbor --interval=5m
 kubectl apply -f envs/public/public.yaml
 ```
+
+### Public environment threat model
+
+We define the threat model to generally trust the network. It is mainly based on the fact, that all the services live
+in the same k8s cluster, so services can communicate with each other without certificate verification because
+we do not expect MITM attacks in the Kubernetes private network. We use HA databases which are external from
+Harbor's point of view, but still running in the same k8s cluster, so just basic auth is implemented(it is easy to do).
+We use TLS(with server certificate verification) only for external traffic(ingress, swift). Which seems sufficient
+for now. There is tracking [issue](https://github.com/SovereignCloudStack/k8s-harbor/issues/27), where all the details can be found.
 
 ## Automated smoke tests
 
