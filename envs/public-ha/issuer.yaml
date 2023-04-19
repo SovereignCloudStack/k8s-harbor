@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt
+  namespace: default
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: roman.hros@dnation.cloud
+    privateKeySecretRef:
+      name: le-harbor
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

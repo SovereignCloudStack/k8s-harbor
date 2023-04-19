@@ -2,90 +2,6 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: postgres-operator
-  namespace: flux-system
-spec:
-  interval: 10m
-  targetNamespace: flux-system
-  sourceRef:
-    kind: GitRepository
-    name: k8s-harbor
-  path: "./operators/postgres"
-  prune: true
-  healthChecks:
-  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-    kind: HelmRelease
-    name: postgres-operator
-    namespace: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: postgres-cluster
-  namespace: flux-system
-spec:
-  dependsOn:
-  - name: postgres-operator
-  interval: 10m
-  targetNamespace: default
-  sourceRef:
-    kind: GitRepository
-    name: k8s-harbor
-  path: "./envs/public/postgres"
-  prune: true
-  healthChecks:
-  - apiVersion: apps/v1
-    kind: StatefulSet
-    name: postgresql
-    namespace: default
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: redis-operator
-  namespace: flux-system
-spec:
-  interval: 10m
-  targetNamespace: flux-system
-  sourceRef:
-    kind: GitRepository
-    name: k8s-harbor
-  path: "./operators/redis"
-  prune: true
-  healthChecks:
-  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-    kind: HelmRelease
-    name: redis-operator
-    namespace: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: redis-cluster
-  namespace: flux-system
-spec:
-  dependsOn:
-  - name: redis-operator
-  interval: 10m
-  targetNamespace: default
-  sourceRef:
-    kind: GitRepository
-    name: k8s-harbor
-  path: "./envs/public/redis"
-  prune: true
-  healthChecks:
-  - apiVersion: apps/v1
-    kind: StatefulSet
-    name: rfr-redisfailover
-    namespace: default
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: rfs-redisfailover
-    namespace: default
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: ingress-nginx
   namespace: flux-system
 spec:
@@ -128,8 +44,6 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: postgres-cluster
-  - name: redis-cluster
   - name: ingress-nginx
   - name: cert-manager
   interval: 10m

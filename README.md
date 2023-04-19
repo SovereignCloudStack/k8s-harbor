@@ -36,7 +36,7 @@ Repository structure:
   - Each subdirectory define deployment of Harbor
     - refers to `base`
     - adds *harbor-config* configmap
-    - It can contain patches and other kustomizations, like `envs/public/redis/`
+    - It can contain patches and other kustomizations, like `envs/public-ha/redis/`
 
 ## Installation
 
@@ -53,7 +53,7 @@ curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=0.40.2 bash
 flux install
 ```
 
-### Example public environment installation
+### Example public HA environment installation
 
 #### Install and wait for operators
 ```
@@ -74,9 +74,9 @@ redis-operator          3.2.7           False           True    Release reconcil
 
 #### Create redis and postgres cluster
 ```
-bash envs/public/redis/redis-secret.bash
-kubectl apply -k envs/public/redis/
-kubectl apply -k envs/public/postgres/
+bash envs/public-ha/redis/redis-secret.bash
+kubectl apply -k envs/public-ha/redis/
+kubectl apply -k envs/public-ha/postgres/
 ```
 
 #### Install Harbor
@@ -85,23 +85,23 @@ kubectl apply -k envs/public/postgres/
 
 - Generate secrets and install Harbor:
   ```
-  bash envs/public/harbor-secrets.bash
-  bash envs/public/swift-secret.bash <username> <password>
-  kubectl apply -k envs/public/
+  bash base/harbor-secrets.bash
+  bash envs/public-ha/swift-secret.bash <username> <password>
+  kubectl apply -k envs/public-ha/
   ```
 
 #### All in one installation using FluxCD Kustomization and GitRepository reconciliation
 
 ```
-bash envs/public/redis/redis-secret.bash
-bash envs/public/harbor-secrets.bash
-bash envs/public/swift-secret.bash <username> <password>
+bash envs/public-ha/redis/redis-secret.bash
+bash base/harbor-secrets.bash
+bash envs/public-ha/swift-secret.bash <username> <password>
 # --branch/tag can be specified, default to master
 flux create source git k8s-harbor --url=https://github.com/SovereignCloudStack/k8s-harbor --interval=5m
-kubectl apply -f envs/public/public.yaml
+kubectl apply -f envs/public-ha/public-ha.yaml
 ```
 
-### Public environment threat model
+### Public HA environment threat model
 
 We define the threat model to generally trust the network. It is mainly based on the fact, that all the services live
 in the same k8s cluster, so services can communicate with each other without certificate verification because
