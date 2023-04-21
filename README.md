@@ -27,10 +27,10 @@ Repository structure:
   - Separate operators can be deployed using e.g. `kubectl apply -k operators/redis/`
 - `postgres`
   - Contains CR `postgresql` - postgresql cluster with basic configuration
-  - Postgres-operator has to be installed first, and then it can be installed by `kubectl apply -k postgres/`
+  - Postgres-operator has to be installed first, and then postgresql cluster can be deployed by `kubectl apply -k postgres/`
 - `redis`
   - Contains CR `RedisFailover` - redis sentinel with basic configuration
-  - Redis-operator has to be installed first, and then it can be installed by `kubectl apply -k redis/`
+  - Redis-operator has to be installed first, and then redis sentinel cluster can be deployed by `kubectl apply -k redis/`
 - `envs`
   - Contains kustomize overlays, e.g. `envs/public/`
   - Each subdirectory define deployment of Harbor
@@ -72,7 +72,7 @@ redis-operator          3.2.7           False           True    Release reconcil
 > kubectl apply -k operators/postgres/
 > ```
 
-#### Create redis and postgres cluster
+#### Create redis and postgres clusters
 ```
 bash envs/public-ha/redis/redis-secret.bash
 kubectl apply -k envs/public-ha/redis/
@@ -101,13 +101,13 @@ flux create source git k8s-harbor --url=https://github.com/SovereignCloudStack/k
 kubectl apply -f envs/public-ha/public-ha.yaml
 ```
 
-### Public HA environment threat model
+### Public environment threat model
 
 We define the threat model to generally trust the network. It is mainly based on the fact, that all the services live
 in the same k8s cluster, so services can communicate with each other without certificate verification because
-we do not expect MITM attacks in the Kubernetes private network. We use HA databases which are external from
-Harbor's point of view, but still running in the same k8s cluster, so just basic auth is implemented(it is easy to do).
-We use TLS(with server certificate verification) only for external traffic(ingress, swift). Which seems sufficient
+we do not expect MITM attacks in the Kubernetes private network. In the case of HA databases (`envs/public-ha`), they are external to Harbor
+, but they are still running in the same k8s cluster, so just basic auth is enabled here (it is easy to do).
+We use TLS (with server certificate verification) only for external traffic (ingress, swift). Which seems sufficient
 for now. There is tracking [issue](https://github.com/SovereignCloudStack/k8s-harbor/issues/27), where all the details can be found.
 
 ## Automated smoke tests
