@@ -26,12 +26,12 @@ data:
           secretName: harbor-harbor-ingress
       ingress:
         hosts:
-          core: registry.scs.dnation.cloud
+          core: registry.scs.community
         className: nginx
         harbor:
           annotations:
             cert-manager.io/issuer: letsencrypt
-    externalURL: https://registry.scs.dnation.cloud
+    externalURL: https://registry.scs.community
     database:
       type: internal
     redis:
