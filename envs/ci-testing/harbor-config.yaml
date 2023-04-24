@@ -1,10 +1,10 @@
 apiVersion: v1
 data:
   config.yaml: |
-    expose:
-      type: clusterIP
-      tls:
-        enabled: false
+    trivy:
+      enabled: true
+    persistence:
+      enabled: true
     externalURL: http://harbor.default.svc
 kind: ConfigMap
 metadata:

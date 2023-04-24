@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
 - helmrepo.yaml
 - helmrelease.yaml
-- harbor-base-config.yaml
