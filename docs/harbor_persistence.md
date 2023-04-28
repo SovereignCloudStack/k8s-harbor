@@ -37,7 +37,7 @@ variously, based on the Harbor configuration, see the [Architecture Overview of 
   - Harbor could be pointed to the "external" database (PostgreSQL) (helm value: `database.type.external`)
   - "Internal" database could be deployed without any persistence, i.e. it could use `emptyDir` (helm value: `persistence.enabled.false`)
 
-### Registry
+### OCI Distribution Registry
 
 - Usage 
   - Backend storage of container images and charts

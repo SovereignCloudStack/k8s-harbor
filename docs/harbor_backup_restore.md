@@ -35,7 +35,7 @@ If you want to use `snapshot` to back up Harbor data ensure the following:
 - Your cluster is Kubernetes version 1.20 or greater
 - Your cluster is running a [CSI driver](https://kubernetes-csi.github.io/docs/drivers.html)
   capable of support volume snapshots at the [v1 API level](https://kubernetes.io/blog/2020/12/10/kubernetes-1.20-volume-snapshot-moves-to-ga/).
-  To enable creating volume snapshots the [snapshot-controller](https://kubernetes-csi.github.io/docs/snapshot-controller.html)
+  To enable creating volume snapshots, the [snapshot-controller](https://kubernetes-csi.github.io/docs/snapshot-controller.html)
   and its CRDs should be deployed in the Kubernetes cluster as well. The snapshot-controller
   is independent of any CSI Driver. These prerequisites come out of the box with the SCS KaaS solution.
 
@@ -113,7 +113,7 @@ and migrate Kubernetes cluster resources.
 
 Go through the [official docs](https://velero.io/docs/main/basic-install/) and 
 install the Velero client on your desired environment. If your environment is Linux distribution
-you can use the following steps and install the Velero client from the source:
+you can use the following steps and install the Velero client from the Github release binaries:
 
 ```bash
 wget https://github.com/vmware-tanzu/velero/releases/download/v1.10.2/velero-v1.10.2-linux-amd64.tar.gz 
