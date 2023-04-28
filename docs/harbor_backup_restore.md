@@ -15,7 +15,7 @@ The guide covers two strategies to save Harbor data:
 - Backup: a regular backup created by the [restic](https://restic.net/) integration in Velero as described in the related [docs](https://velero.io/docs/main/file-system-backup/)
 - Snapshot: a point-in-time snapshot be the Container Storage Interface (CSI) snapshot support in Velero as described in the related [docs](https://velero.io/docs/main/csi/)
 
-Before you choose the right strategy for your Harbor deployment back up make sure that you understand
+Before you choose the right strategy for your Harbor deployment backup, make sure that you understand
 [differences](https://www.terra-master.com/global/snapshot) between the backup and snapshot.
 In general, for long-term protection of Harbor data, you may use backup and for
 temporary protection of data (e.g. before Harbor upgrade) you may use snapshot.
