@@ -63,7 +63,15 @@ source <project>-openrc.sh
 
 Swift object store service does not support application credentials authentication
 to access S3 API. To authenticate in S3 API, you should generate and use the EC2 credentials
-mechanism. You can generate EC2 credentials as follows:
+mechanism.
+Note that EC2 credentials are associated with a user and are scoped only to a specific project.
+EC2 credentials are not protected by limited roles, expiration time, or
+access rules, therefore they have the same access as the user who created them. If you
+want to restrict EC2 credentials you could use application credentials for their creation,
+then EC2 credentials should inherit a (potentially) limited subset of roles that creator
+owns (see [this](https://opendev.org/openstack/keystone/commit/487c7276c7608fb11086b9875b0d7cc7cf594a5a) for details).
+
+You can generate EC2 credentials as follows:
 
 ```bash
 $ openstack ec2 credentials create
@@ -186,8 +194,16 @@ docs for further information regarding the Harbor persistence layer. The followi
 cases when Harbor persistence is enabled and the "internal" databases (PostgreSQL and Redis)
 are used.
 
-Note that backups of external databases (PostgreSQL and Redis) are not supported by the 
-official tutorial and are out of the scope of this guide as well.
+Note that Redis key-value database is not backed up in both cases, i.e. when "internal"
+or "external" Redis instance is used. As a result, the user sessions of logged users
+that are stored in Redis will be lost. Hence, after the restore, users should log in
+again. This data loss should be a low impact on your restored Harbor instance.
+
+PostgreSQL database should be backed up as it stores important metadata of Harbor models,
+like projects, users, roles, etc. The backup and restore of "internal" PostgreSQL instance
+is covered by this guide. The "external" PostgreSQL backup is not supported by the
+official tutorial and is out of the scope of this guide as well.
+
 Also, keep an eye on the official backup and restore [limitations](https://goharbor.io/docs/main/administration/backup-restore/#limitations)
 section to be aware of the potential impact on your Harbor instance. The limitation:
 `The upload purging process may cause backup failure` mentioned that it is better to
