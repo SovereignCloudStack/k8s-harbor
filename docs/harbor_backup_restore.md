@@ -24,10 +24,10 @@ Note that this guide is not limited to Harbor deployments that utilize SCS envir
 but it is required to have a set of tools and services (e.g. Kubernetes CSI plugin with volume snapshot
 support, S3 compatible object store for backups) for successful backup and restore procedure
 (see the [prerequisites](#prerequisites-) section). These tools and services come out of
-the box when the SCS infrastructure and KaaS is used for Harbor deployment, hence it is
+the box when the SCS infrastructure and KaaS are used for Harbor deployment, hence it is
 convenient to use them. 
 
-## Prerequisites 
+## Prerequisites
 
 ### Kubernetes cluster
 
@@ -121,7 +121,7 @@ and migrate Kubernetes cluster resources.
 
 Go through the [official docs](https://velero.io/docs/main/basic-install/) and 
 install the Velero client on your desired environment. If your environment is Linux distribution
-you can use the following steps and install the Velero client from the Github release binaries:
+you can use the following steps and install the Velero client from the GitHub release binaries:
 
 ```bash
 wget https://github.com/vmware-tanzu/velero/releases/download/v1.10.2/velero-v1.10.2-linux-amd64.tar.gz 
