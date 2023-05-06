@@ -23,7 +23,7 @@ temporary protection of data (e.g. before Harbor upgrade) you may use snapshot.
 Note that this guide is not limited to Harbor deployments that utilize SCS environments,
 but it is required to have a set of tools and services (e.g. Kubernetes CSI plugin with volume snapshot
 support, S3 compatible object store for backups) for successful backup and restore procedure
-(see the [prerequisites](#prerequisites-) section). These tools and services come out of
+(see the [prerequisites](#prerequisites) section). These tools and services come out of
 the box when the SCS infrastructure and KaaS are used for Harbor deployment, hence it is
 convenient to use them. 
 
