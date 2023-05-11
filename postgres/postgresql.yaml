@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: postgresql
+spec:
+  teamId: "harbor"
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    harbor:
+    - createdb
+  databases:
+    registry: harbor
+    notaryserver: harbor
+    notarysigner: harbor
+  postgresql:
+    version: "15"

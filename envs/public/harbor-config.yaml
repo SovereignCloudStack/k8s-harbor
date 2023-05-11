@@ -1,32 +1,57 @@
 apiVersion: v1
 data:
   config.yaml: |
+    fullnameOverride: harbor-harbor
+    trivy:
+      enabled: true
+      replicas: 2
+    portal:
+      replicas: 2
+    core:
+      replicas: 2
+    jobservice:
+      replicas: 2
+      jobLoggers:
+      - database
+    registry:
+      replicas: 2
+    cache:
+      enabled: true
+    expose:
+      type: ingress
+      tls:
+        enabled: true
+        certSource: secret
+        secret:
+          secretName: harbor-harbor-ingress
+      ingress:
+        hosts:
+          core: registry.scs.community
+        className: nginx
+        harbor:
+          annotations:
+            cert-manager.io/issuer: letsencrypt
+    externalURL: https://registry.scs.community
+    database:
+      type: internal
+    redis:
+      type: internal
     persistence:
+      enabled: true
       persistentVolumeClaim:
-        registry:
-          size: 1Ti
-        jobservice:
-          size: 64Gi
         database:
           size: 256Gi
         redis:
           size: 128Gi
         trivy:
           size: 256Gi
-    expose:
-      type: ingress
-      tls:
-        enabled: true
-        secret:
-          secretName: le-harbor
-      ingress:
-        hosts:
-          core: registry.scs.community
-        annotations:
-          nginx.ingress.kubernetes.io/ssl-redirect: 'true'
-          kubernetes.io/ingress-class: 'nginx'
-          cert-manager.io/issuer: 'letsencrypt'
-    externalURL: https://registry.scs.community
+      imageChartStorage:
+        type: s3
+        s3:
+          regionendpoint: https://api.gx-scs.sovereignit.cloud:8080
+          # accesskey and secretkey are populated via s3-secret.bash
+          bucket: registry
+          region: RegionOne
 kind: ConfigMap
 metadata:
   name: harbor-config

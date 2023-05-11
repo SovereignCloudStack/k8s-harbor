@@ -1,28 +1,20 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: GitRepository
-metadata:
-  name: harbor-helm
-  namespace: default
-spec:
-  interval: 1m
-  url: https://github.com/goharbor/harbor-helm.git
-  ref:
-    tag: v1.10.0
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: harbor
   namespace: default
 spec:
-  interval: 1m
+  targetNamespace: default
   chart:
     spec:
-      chart: .
+      chart: harbor
+      version: 1.11.1
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: harbor-helm
+        namespace: default
+  interval: 1m0s
+  releaseName: harbor
   install:
     remediation:
       retries: -1
@@ -36,6 +28,8 @@ spec:
   - kind: ConfigMap
     name: harbor-config
     valuesKey: config.yaml
+    optional: true
   - kind: Secret
     name: harbor-secrets
     valuesKey: values.yaml
+    optional: true

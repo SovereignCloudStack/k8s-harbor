@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- helmrepo.yaml
-- helmrelease.yaml
-- harbor-base-config.yaml
+- ./cert-manager
+- ./ingress-nginx
+- ./postgres
+- ./redis
