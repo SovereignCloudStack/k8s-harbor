@@ -133,6 +133,7 @@ spec:
   - name: ingress-nginx
   - name: cert-manager
   interval: 10m
+  targetNamespace: default
   sourceRef:
     kind: GitRepository
     name: k8s-harbor

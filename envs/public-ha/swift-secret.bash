@@ -7,4 +7,5 @@ fi
 
 kubectl create secret generic swift-secret \
   --from-literal=username="$1" \
-  --from-literal=password="$2"
+  --from-literal=password="$2" \
+  -n "${3:-default}"

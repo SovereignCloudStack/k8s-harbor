@@ -17,4 +17,3 @@ data:
 kind: ConfigMap
 metadata:
   name: harbor-base-config
-  namespace: default
