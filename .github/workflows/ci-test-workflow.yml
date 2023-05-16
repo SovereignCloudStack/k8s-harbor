@@ -37,7 +37,7 @@ jobs:
       run: |
         set -ex
         if test -n "${GITHUB_HEAD_REF#refs/heads/}"; then flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}; else flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF_NAME}; fi
-        flux create kustomization deployment --source=repo --path=envs/ci-testing --prune
+        flux create kustomization deployment --source=repo --path=envs/ci-testing --prune --target-namespace default
     - name: Wait for service to be Ready
       run: ./test/wait
     - name: Check if service is working as expected
