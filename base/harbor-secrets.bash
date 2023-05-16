@@ -22,4 +22,4 @@ registry:
     htpasswdString: '$REGISTRY_HTPASSWD'
 EOF
 
-kubectl create secret generic harbor-secrets --from-file=values.yaml="$FILE"
+kubectl create secret generic harbor-secrets --from-file=values.yaml="$FILE" -n "${1:-default}"
