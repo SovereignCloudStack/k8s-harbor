@@ -3,6 +3,8 @@ data:
   config.yaml: |
     trivy:
       enabled: true
+    metrics:
+      enabled: true
     persistence:
       enabled: true
     externalURL: http://harbor.default.svc
