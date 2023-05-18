@@ -7,4 +7,5 @@ fi
 
 kubectl create secret generic s3-secret \
   --from-literal=accesskey="$1" \
-  --from-literal=secretkey="$2"
+  --from-literal=secretkey="$2" \
+  -n "${3:-default}"
