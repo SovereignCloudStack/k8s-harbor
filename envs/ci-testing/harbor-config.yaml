@@ -7,6 +7,8 @@ data:
       enabled: true
     persistence:
       enabled: true
+    cache:
+      enabled: true
     externalURL: http://harbor.default.svc
 kind: ConfigMap
 metadata:
