@@ -77,7 +77,7 @@ redis-operator          3.2.7           False           True    Release reconcil
 
 #### Create redis and postgres clusters
 ```
-bash envs/public-ha/redis/redis-secret.bash
+bash envs/public-ha/redis/redis-secret.bash # pwgen needs to be installed
 kubectl apply -k envs/public-ha/redis/
 kubectl apply -k envs/public-ha/postgres/
 ```
@@ -94,7 +94,7 @@ kubectl apply -k envs/public-ha/postgres/
 
 - Generate secrets and install Harbor:
   ```
-  bash base/harbor-secrets.bash
+  bash base/harbor-secrets.bash # pwgen needs to be installed
   bash envs/public-ha/swift-secret.bash <username> <password>
   kubectl apply -k envs/public-ha/
   ```

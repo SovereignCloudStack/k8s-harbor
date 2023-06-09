@@ -20,6 +20,9 @@ registry:
     username: $REGISTRY_USER
     password: '$REGISTRY_PASSWD'
     htpasswdString: '$REGISTRY_HTPASSWD'
+database:
+  internal:
+    password: '$(pwgen -s 20 1)'
 EOF
 
 kubectl create secret generic harbor-secrets --from-file=values.yaml="$FILE" -n "${1:-default}"
