@@ -77,7 +77,7 @@ redis-operator          3.2.7           False           True    Release reconcil
 
 #### Create redis and postgres clusters
 ```
-bash envs/public-ha/redis/redis-secret.bash # pwgen needs to be installed
+envs/public-ha/redis/redis-secret.bash # pwgen needs to be installed
 kubectl apply -k envs/public-ha/redis/
 kubectl apply -k envs/public-ha/postgres/
 ```
@@ -94,17 +94,17 @@ kubectl apply -k envs/public-ha/postgres/
 
 - Generate secrets and install Harbor:
   ```
-  bash base/harbor-secrets.bash # pwgen needs to be installed
-  bash envs/public-ha/swift-secret.bash <username> <password>
+  base/harbor-secrets.bash # pwgen needs to be installed
+  envs/public-ha/swift-secret.bash <username> <password>
   kubectl apply -k envs/public-ha/
   ```
 
 #### All in one installation using FluxCD Kustomization and GitRepository reconciliation
 
 ```
-bash envs/public-ha/redis/redis-secret.bash
-bash base/harbor-secrets.bash
-bash envs/public-ha/swift-secret.bash <username> <password>
+envs/public-ha/redis/redis-secret.bash
+base/harbor-secrets.bash
+envs/public-ha/swift-secret.bash <username> <password>
 # --branch/tag can be specified, default to master
 flux create source git k8s-harbor --url=https://github.com/SovereignCloudStack/k8s-harbor --interval=5m
 kubectl apply -f envs/public-ha/public-ha.yaml
