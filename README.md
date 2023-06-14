@@ -94,7 +94,7 @@ kubectl apply -k envs/public-ha/postgres/
 
 - Generate secrets and install Harbor:
   ```
-  base/harbor-secrets.bash # pwgen needs to be installed
+  base/harbor-secrets.bash # pwgen and htpasswd need to be installed
   envs/public-ha/swift-secret.bash <username> <password>
   kubectl apply -k envs/public-ha/
   ```
