@@ -52,7 +52,7 @@ export KUBECONFIG=/path/to/kubeconfig
 Installation documentation: https://fluxcd.io/flux/installation/#install-the-flux-cli
 
 ```
-curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=0.40.2 bash
+curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=2.1.0 bash
 flux install
 ```
 
