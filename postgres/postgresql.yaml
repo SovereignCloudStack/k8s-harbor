@@ -12,7 +12,5 @@ spec:
     - createdb
   databases:
     registry: harbor
-    notaryserver: harbor
-    notarysigner: harbor
   postgresql:
     version: "15"
