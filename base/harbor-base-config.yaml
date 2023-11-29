@@ -3,8 +3,6 @@ data:
   config.yaml: |
     trivy:
       enabled: false
-    notary:
-      enabled: false
     persistence:
       enabled: false
     expose:
