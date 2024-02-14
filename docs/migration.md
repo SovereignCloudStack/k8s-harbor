@@ -1,4 +1,4 @@
-# Harbor - migration
+# Migration
 
 ![harbor_migration.png](images/harbor_migration.png)
 
@@ -23,7 +23,7 @@ are used for Harbor deployment, hence it is convenient to use them.
 ## Prerequisites
 
 As this scenario uses a backup and restore procedure for the migration process, this section
-refers to the prerequisites section in [Harbor - backup and restore](harbor_backup_restore.md#prerequisites)
+refers to the prerequisites section in [Harbor - backup and restore](backup_and_restore#prerequisites)
 docs page. 
 
 ### Kubernetes clusters
@@ -57,19 +57,19 @@ with a feature flag `--features=EnableAPIGroupVersions`. Note that this feature 
 ### S3 bucket and EC2 credentials
 
 This guide assumes that the public cloud's object store with S3-compatible API is available as
-the storage backend for Velero. Refer to the [S3 bucket and EC2 credentials](harbor_backup_restore.md#s3-bucket-and-ec2-credentials)
+the storage backend for Velero. Refer to the [S3 bucket and EC2 credentials](backup_and_restore#s3-bucket-and-ec2-credentials)
 section in the backup and restore docs and create a bucket that will be later used for
 the migration.
 
 ### Velero client
 
-Install the Velero client on your local environment, refer to [Velero client](harbor_backup_restore.md#velero-client).
+Install the Velero client on your local environment, refer to [Velero client](backup_and_restore#velero-client).
 
 ### Velero server
 
 Install Velero server components along with the appropriate plugins, into the both
 (Cluster_A and Cluster_B) clusters. Keep in mind that we will use Restic uploader in
-Velero, hence follows interactions on how to do that in the related docs section [Velero server](harbor_backup_restore.md#velero-server).
+Velero, hence follows interactions on how to do that in the related docs section [Velero server](backup_and_restore#velero-server).
 Do not forget to add `--kubeconfig` argument to install Velero server components
 to the Cluster_A and then to the Cluster_B. The rest of arguments should be the same:
 
@@ -101,7 +101,7 @@ $ kubectl -n velero --kubeconfig <path of Cluster_B kubeconfig> edit backupstora
 ## Migration
 
 Before we start to migrate Harbor instance from one environment to another go through the 
-[Backup and restore](harbor_backup_restore.md#backup-and-restore) section and read 
+[Backup and restore](backup_and_restore#backup-and-restore) section and read 
 various limitations of the backup/restore process to be aware of the potential impact on
 your Harbor instance.
 

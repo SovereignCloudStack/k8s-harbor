@@ -1,4 +1,4 @@
-# Harbor - rate limit
+# Rate limit
 
 This page describes how the rate limiting can be set up for the Harbor container registry.
 

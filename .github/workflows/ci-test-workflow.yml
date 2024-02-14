@@ -21,7 +21,7 @@ jobs:
         command: |
           set -x
           set +e
-          kustomize build envs/ci-testing | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
+          kustomize build envs/dev | conftest test --update github.com/instrumenta/policies.git//kubernetes - -o json > result.json || echo "conftest failed!"
           set -e
           cat result.json | jq -r '(.[0].failures // []) | "::warning::\(.[].msg)\n"'
     - uses: engineerd/setup-kind@v0.5.0
@@ -30,14 +30,14 @@ jobs:
     - name: Install flux cli and do setup
       run: |
         set -e
-        curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=2.1.0 bash
+        curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=2.2.3 bash
         set -x
         flux install --components=source-controller,kustomize-controller,helm-controller
     - name: Setup GitRepository/Kustomization
       run: |
         set -ex
         if test -n "${GITHUB_HEAD_REF#refs/heads/}"; then flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_HEAD_REF#refs/heads/}; else flux create source git repo --url=https://github.com/$GITHUB_REPOSITORY.git --branch=${GITHUB_REF_NAME}; fi
-        flux create kustomization deployment --source=repo --path=envs/ci-testing --prune --target-namespace default
+        flux create kustomization deployment --source=repo --path=envs/dev --prune --target-namespace default
     - name: Wait for service to be Ready
       run: ./test/wait
     - name: Check if service is working as expected
