@@ -1,4 +1,4 @@
-# Container registry HA deployment
+# HA deployment
 
 ## Prerequisites
 
