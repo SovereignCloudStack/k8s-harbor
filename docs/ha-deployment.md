@@ -46,6 +46,7 @@ kubectl apply -k envs/public-ha/postgres/
 
 ## Install Harbor
 
+- Replace the `example.com` URL in the `harbor-config.yaml` file with the desired one.
 - Take *ingress-nginx-controller* LoadBalancer IP address and create DNS record for Harbor.
   ```
   kubectl get svc -n ingress-nginx
@@ -55,6 +56,8 @@ kubectl apply -k envs/public-ha/postgres/
   ```
 
 - Generate secrets and install Harbor:
+- It is recommended to replace `admin@example.com` email address in `issuer.yaml` with your own.
+  Let's Encrypt will use this to contact you about expiring certificates, and issues related to your account.
   ```
   base/harbor-secrets.bash # pwgen and htpasswd need to be installed
   envs/public-ha/swift-secret.bash <username> <password>
