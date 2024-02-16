@@ -1,4 +1,4 @@
-# Harbor persistence
+# Persistence
 
 This page briefly describes and provides pointers on how Harbor persists data when it is
 deployed in a Kubernetes cluster environment. It points out the default persistence settings

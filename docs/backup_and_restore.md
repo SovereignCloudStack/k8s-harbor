@@ -1,4 +1,4 @@
-# Harbor - backup and restore
+# Backup and restore
 
 This page aims at providing a step-by-step guide for backup and restore [Harbor](https://goharbor.io/)
 container registry using [Velero](https://velero.io/) tool.
@@ -189,7 +189,7 @@ Note that the following backup steps mainly point to actions from an official [B
 In this guide, find the added value from additional explanations/hints and up-to-date commands.
 
 Harbor, by design, consists of multiple (micro)services that could store their data
-variously, based on the Harbor configuration. See the [Harbor persistence](harbor_persistence.md)
+variously, based on the Harbor configuration. See the [Harbor persistence](persistence.md)
 docs for further information regarding the Harbor persistence layer. The following steps cover
 cases when Harbor persistence is enabled and the "internal" databases (PostgreSQL and Redis)
 are used.
