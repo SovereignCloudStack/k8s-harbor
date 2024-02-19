@@ -1,11 +1,12 @@
 # SCS deployment
 
-The following steps were utilized for deploying the SCS reference installation of the Harbor container registry.
+The following steps were utilized for deploying the SCS reference installation of the Harbor container registry,
+which is available at https://registry.scs.community.
 
 ## Prerequisites
 
 - Kubernetes cluster v1.20+
-  - Use existing cluster
+  - We used the R5 version of SCS KaaS V1, which includes an ingress controller and cert manager
     ```bash
     export KUBECONFIG=/path/to/kubeconfig
     ```
@@ -15,7 +16,8 @@ The following steps were utilized for deploying the SCS reference installation o
     curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=2.2.3 bash
     flux install
     ```
-    
+- [kubectl](https://kubernetes.io/docs/reference/kubectl/)
+
 ## Install Harbor
 
 - Take *ingress-nginx-controller* LoadBalancer IP address and create DNS record for Harbor.
