@@ -19,7 +19,7 @@ $ kubectl edit cm -n ingress-nginx ingress-nginx-controller
 There are other useful annotations, such as limit concurrent connections, number of kilobytes per second or limit burst requests.
 E.g. bursts can be configured via `nginx.ingress.kubernetes.io/limit-burst-multiplier`, which is by default *5*.
 It means that [burst](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req)
-will be set in this case to *limit-rps * limit-burst-multiplier = 1 * 5 = 5*.
+will be set in this case to `limit-rps * limit-burst-multiplier = 1 * 5 = 5`.
 
 More information about nginx rate-limiting and real-world examples can be seen in this nginx [blog](https://www.nginx.com/blog/rate-limiting-nginx/).
 Also, there is a second option for how the rate limiting can be configured called [global rate limiting](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#global-rate-limiting).
