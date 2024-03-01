@@ -12,7 +12,7 @@ variously, based on the Harbor configuration, see the [Architecture Overview of 
 ### Redis
 
 - Usage
-  - Key value storage used as a login session cache, a registry manifest cache, and a queue for the jobservice (e.g. see [Trivy](#-trivy)) 
+  - Key value storage used as a login session cache, a registry manifest cache, and a queue for the jobservice (e.g. see [Trivy](#trivy)) 
 - Default settings
   - Deployed as an "internal" single node database into the same Kubernetes cluster as Harbor (helm value: `redis.type.internal`)
   - Deployed as a StatefulSet with 1 replica
