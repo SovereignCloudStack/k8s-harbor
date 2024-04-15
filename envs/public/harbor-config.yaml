@@ -34,6 +34,7 @@ data:
           annotations:
             cert-manager.io/issuer: letsencrypt
             nginx.ingress.kubernetes.io/limit-rps: "25"
+            nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
     externalURL: https://registry.scs.community
     database:
       type: internal
